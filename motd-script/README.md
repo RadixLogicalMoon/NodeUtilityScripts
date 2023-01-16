@@ -5,7 +5,7 @@ This shell script can be installed to augment your existing shell login with inf
 This script is currently only available for nodes using the System D method
 
 ## Install
-Copy the file ```script/70-RadixNode``` to the following directory  ```/etc/update-motd.d``` on your linux machine.  You can use ```wget -O 70-RadixNode https://github.com/RadixLogicalMoon/NodeUtilityScripts/motd-script/script/70-RadixNode```
+Copy the file ```script/70-RadixNode``` to the following directory  ```/etc/update-motd.d``` on your linux machine.  You can use ```sudo wget -O 70-RadixNode https://raw.githubusercontent.com/RadixLogicalMoon/NodeUtilityScripts/main/motd-script/script/70-RadixNode```
 
 Run the following commands to set the permissions correctly
 ```
@@ -24,7 +24,7 @@ Create a config file and store it in directory ```/etc/radixdlt/node``` with nam
 
 ```
 {
-    "apiPort":"3333"    
+    "apiPort":"3333",    
     "colour":"Orange",
     "location":"London",
     "validatorAddressId":"rv1qd7533ya9vjgdp83crtlsfvamqxtzdptamlqcmqmc2vd3hwnsezxk7hta3g"

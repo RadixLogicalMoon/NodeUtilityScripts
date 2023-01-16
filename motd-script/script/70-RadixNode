@@ -3,7 +3,7 @@
 
 # Config File Format
 # {
-#    "apiPort":"3333"    
+#    "apiPort":"3333",    
 #    "colour":"Orange",
 #    "location":"London",
 #    "validatorAddressId":"rv1qd7533ya9vjgdp83crtlsfvamqxtzdptamlqcmqmc2vd3hwnsezxk7hta3g"
@@ -11,13 +11,13 @@
 
 
 getNodeStatus(){
-    radixApiPort=$(< /etc/radixdlt/nodeDetails.json jq '.apiPort')
+    radixApiPort=$(< /etc/radixdlt/node/nodeDetails.json jq '.apiPort' | tr -d '"')
     
     nodeStatus=$(curl -s localhost:"$radixApiPort"/system/health | jq '.status')
     
-    validatorAddress=$(curl -X POST localhost:"$radixApiPort"/key/list -H "Content-Type: application/json" -d '{ "network_identifier": { "network": "mainnet" } }' | jq '.public_keys[0].identifiers.validator_entity_identifier.address')
+    validatorAddress=$(curl --silent --output /dev/null -X POST localhost:"$radixApiPort"/key/list -H "Content-Type: application/json" -d '{ "network_identifier": { "network": "mainnet" } }' | jq '.public_keys[0].identifiers.validator_entity_identifier.address')
     
-    validatorAddressId=$(< /etc/radixdlt/nodeDetails.json jq '.validatorAddressId')
+    validatorAddressId=$(< /etc/radixdlt/node/nodeDetails.json jq '.validatorAddressId')
     
     validatorState="Full Node"
     if [ "$validatorAddress" = "$validatorAddressId" ]; then
@@ -28,9 +28,9 @@ getNodeStatus(){
 }
 
 getSystemDetails(){
-    nodeColour=$(< /etc/radixdlt/nodeDetails.json jq '.colour')
-    nodeLocation=$(< /etc/radixdlt/nodeDetails.json jq '.location')
-    machineName=$(uname)
+    nodeColour=$(< /etc/radixdlt/node/nodeDetails.json jq '.colour')
+    nodeLocation=$(< /etc/radixdlt/node/nodeDetails.json jq '.location')
+    machineName=$(hostname)
     echo "Machine Name: $machineName"
     echo "Node Colour: $nodeColour"
     echo "Location: $nodeLocation"
