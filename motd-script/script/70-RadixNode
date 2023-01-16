@@ -36,6 +36,7 @@ getSystemDetails(){
     echo "Location: $nodeLocation"
 }
 
+echo ""
 echo "Welcome $USER, you're crushing it today"
 
 # Name + Colour Tag + Location
