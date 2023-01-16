@@ -1,0 +1,46 @@
+#!/bin/sh
+
+
+# Config File Format
+# {
+#    "apiPort":"3333"    
+#    "colour":"Orange",
+#    "location":"London",
+#    "validatorAddressId":"rv1qd7533ya9vjgdp83crtlsfvamqxtzdptamlqcmqmc2vd3hwnsezxk7hta3g"
+# }
+
+
+getNodeStatus(){
+    radixApiPort=$(< /etc/radixdlt/nodeDetails.json jq '.apiPort')
+    
+    nodeStatus=$(curl -s localhost:"$radixApiPort"/system/health | jq '.status')
+    
+    validatorAddress=$(curl -X POST localhost:"$radixApiPort"/key/list -H "Content-Type: application/json" -d '{ "network_identifier": { "network": "mainnet" } }' | jq '.public_keys[0].identifiers.validator_entity_identifier.address')
+    
+    validatorAddressId=$(< /etc/radixdlt/nodeDetails.json jq '.validatorAddressId')
+    
+    validatorState="Full Node"
+    if [ "$validatorAddress" = "$validatorAddressId" ]; then
+        validatorState="Validator"
+    fi
+
+    echo "Radix Node is running as a $validatorState and the status is $nodeStatus"
+}
+
+getSystemDetails(){
+    nodeColour=$(< /etc/radixdlt/nodeDetails.json jq '.colour')
+    nodeLocation=$(< /etc/radixdlt/nodeDetails.json jq '.location')
+    machineName=$(uname)
+    echo "Machine Name: $machineName"
+    echo "Node Colour: $nodeColour"
+    echo "Location: $nodeLocation"
+}
+
+echo "Welcome $USER, you're crushing it today"
+
+# Name + Colour Tag + Location
+getSystemDetails
+
+# Radix Node Running and Up (Maybe create a separate shell script)
+getNodeStatus
+
