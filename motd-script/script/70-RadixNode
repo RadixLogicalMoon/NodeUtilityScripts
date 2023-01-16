@@ -15,7 +15,7 @@ getNodeStatus(){
     
     nodeStatus=$(curl -s localhost:"$radixApiPort"/system/health | jq '.status')
     
-    validatorAddress=$(curl --silent --output /dev/null -X POST localhost:"$radixApiPort"/key/list -H "Content-Type: application/json" -d '{ "network_identifier": { "network": "mainnet" } }' | jq '.public_keys[0].identifiers.validator_entity_identifier.address')
+    validatorAddress=$(curl --silent -X POST localhost:"$radixApiPort"/key/list -H "Content-Type: application/json" -d '{ "network_identifier": { "network": "mainnet" } }' | jq '.public_keys[0].identifiers.validator_entity_identifier.address')
     
     validatorAddressId=$(< /etc/radixdlt/node/nodeDetails.json jq '.validatorAddressId')
     
