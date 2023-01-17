@@ -42,6 +42,6 @@ echo ""
 # Name + Colour Tag + Location
 getSystemDetails
 
-# Radix Node Running and Up (Maybe create a separate shell script)
+# Radix Node Running and Up 
 getNodeStatus
 
