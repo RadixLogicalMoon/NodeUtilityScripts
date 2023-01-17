@@ -34,5 +34,7 @@ Create a config file and store it in directory ```/etc/radixdlt/node``` with nam
 ## Executing It
 Now logout and log back in and you should see the changes
 
+![console output](output.png)
+
 ## Run without logging in
 You can re-run without logging back in by running the command ```sudo run-parts /etc/update-motd.d/``` (This just executes all the scripts in the directory ```/etc/update-motd.d```).  If the changes have not worked, make sure you have set the permissions correctly
